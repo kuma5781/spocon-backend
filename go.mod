@@ -2,7 +2,10 @@ module sample
 
 go 1.22.3
 
-require github.com/oapi-codegen/oapi-codegen/v2 v2.3.0
+require (
+	github.com/labstack/echo/v4 v4.12.0
+	github.com/oapi-codegen/oapi-codegen/v2 v2.3.0
+)
 
 require (
 	github.com/getkin/kin-openapi v0.124.0 // indirect
@@ -10,7 +13,6 @@ require (
 	github.com/go-openapi/swag v0.22.8 // indirect
 	github.com/invopop/yaml v0.2.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
-	github.com/labstack/echo/v4 v4.12.0 // indirect
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
