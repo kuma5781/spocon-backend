@@ -19,6 +19,7 @@ paths:
         '400':
           description: リクエスト形式が正しくない場合
           content: {}
+  /user:
     post:
       summary: ユーザーの作成
       operationId: create-user

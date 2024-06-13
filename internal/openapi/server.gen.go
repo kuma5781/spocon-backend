@@ -13,7 +13,7 @@ type ServerInterface interface {
 	// (GET /health)
 	HealthCheck(ctx echo.Context) error
 	// ユーザーの作成
-	// (POST /health)
+	// (POST /user)
 	CreateUser(ctx echo.Context) error
 }
 
@@ -69,6 +69,6 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	}
 
 	router.GET(baseURL+"/health", wrapper.HealthCheck)
-	router.POST(baseURL+"/health", wrapper.CreateUser)
+	router.POST(baseURL+"/user", wrapper.CreateUser)
 
 }
