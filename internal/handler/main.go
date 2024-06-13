@@ -2,22 +2,26 @@ package main
 
 import (
 	"net/http"
+	"sample/internal/openapi"
 
 	"github.com/labstack/echo/v4"
 )
 
-func main() {
-	// Echo instance
-	e := echo.New()
+type Server struct{}
 
-	// Routes
-	e.GET("/health", hello)
-
-	// Start server
-	e.Logger.Fatal(e.Start(":1323"))
+func (s *Server) HealthCheck(ctx echo.Context) error {
+	return ctx.NoContent(http.StatusOK)
 }
 
-// Handler
-func hello(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello, World!")
+func (s *Server) CreateUser(ctx echo.Context) error {
+	return ctx.NoContent(http.StatusOK)
+}
+
+func main() {
+	e := echo.New()
+
+	s := &Server{}
+	openapi.RegisterHandlers(e, s)
+
+	e.Logger.Fatal(e.Start(":1323"))
 }
