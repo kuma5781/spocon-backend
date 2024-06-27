@@ -4,7 +4,11 @@
 package openapi
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/labstack/echo/v4"
+	"github.com/oapi-codegen/runtime"
 )
 
 // ServerInterface represents all server handlers.
@@ -12,6 +16,9 @@ type ServerInterface interface {
 	// ヘルスチェック
 	// (GET /health)
 	HealthCheck(ctx echo.Context) error
+	// ユーザーの取得
+	// (GET /user)
+	GetUser(ctx echo.Context, params GetUserParams) error
 	// ユーザーの作成
 	// (POST /user)
 	CreateUser(ctx echo.Context) error
@@ -28,6 +35,24 @@ func (w *ServerInterfaceWrapper) HealthCheck(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.HealthCheck(ctx)
+	return err
+}
+
+// GetUser converts echo context to params.
+func (w *ServerInterfaceWrapper) GetUser(ctx echo.Context) error {
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetUserParams
+	// ------------- Required query parameter "id" -------------
+
+	err = runtime.BindQueryParameter("form", true, true, "id", ctx.QueryParams(), &params.Id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter id: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetUser(ctx, params)
 	return err
 }
 
@@ -69,6 +94,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	}
 
 	router.GET(baseURL+"/health", wrapper.HealthCheck)
+	router.GET(baseURL+"/user", wrapper.GetUser)
 	router.POST(baseURL+"/user", wrapper.CreateUser)
 
 }

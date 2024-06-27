@@ -20,27 +20,59 @@ paths:
           description: リクエスト形式が正しくない場合
           content: {}
   /user:
+    get:
+      summary: ユーザーの取得
+      operationId: get-user
+      tags:
+        - user
+      parameters:
+        - name: id
+          in: query
+          description: ユーザーID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ユーザーの取得が成功した場合
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserResponse'
+        '400':
+          description: リクエスト形式が正しくない場合
+          content: {}
     post:
       summary: ユーザーの作成
       operationId: create-user
       tags:
         - user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-        required: true
       responses:
         '201':
           description: ユーザーの作成が成功した場合
-          content: {}
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
         '400':
           description: リクエスト形式が正しくない場合
           content: {}
 components:
   schemas:
-    User:
+    GetUserResponse:
+      type: object
+      required:
+        - id
+        - name
+        - email
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+    CreateUserResponse:
       type: object
       required:
         - name
