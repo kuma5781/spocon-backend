@@ -10,6 +10,5 @@ tasks:
       - go install $(go list -e -f {{ "'{{ " }} {{.JOIN_COMMAND}} {{ "}}' " }} tools/tools.go)
   up:
     cmds:
-      - docker-compose up -d --build 
-      - sleep 20 # FIXME to wait for mysql to start 
+      - docker-compose up -d --build
       - go run tools/migrate.go
