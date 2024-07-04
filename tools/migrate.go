@@ -2,7 +2,9 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+	"os"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -13,7 +15,14 @@ import (
 )
 
 func main() {
-	db, err := sql.Open("mysql", "root:mysql@tcp(localhost:3306)/spocon")
+	host := os.Getenv("MYSQL_HOST")
+	port := os.Getenv("MYSQL_PORT")
+	user := os.Getenv("MYSQL_USER")
+	password := os.Getenv("MYSQL_PASSWORD")
+	database := os.Getenv("MYSQL_DATABASE")
+
+	dns := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, password, host, port, database)
+	db, err := sql.Open("mysql", dns)
 	if err != nil {
 		log.Fatalf("Failed to open database connection: %v", err)
 	}
@@ -36,7 +45,7 @@ func main() {
 
 	m, err := migrate.New(
 		"file://database/migrations",
-		"mysql://root:mysql@tcp(localhost:3306)/spocon",
+		"mysql://"+dns,
 	)
 	if err != nil {
 		log.Fatal(err)
