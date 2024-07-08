@@ -66,3 +66,12 @@
 ```
 find . -name "*.go" -exec gofmt -w {} \;
 ```
+
+## マイグレーションファイル作成手順
+
+- ファイル名を指定して、以下のコマンドを実行する
+    ```
+    go run github.com/golang-migrate/migrate/v4/cmd/migrate create -ext sql -dir database/migrations -seq {ファイル名}
+    ```
+- 実行後、database/migrations配下に指定した名前でファイルが作成されていることを確認する
+- 〇〇.up.sqlに追加したいSQL、〇〇.down.sqlに追加した分を戻すSQLを記載する
