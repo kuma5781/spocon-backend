@@ -1,3 +1,6 @@
+//go:build migration_setup
+// +build migration_setup
+
 package main
 
 import (
@@ -55,5 +58,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Println("Migration completed successfully.")
+	log.Println("Migration up completed successfully.")
 }

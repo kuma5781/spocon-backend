@@ -11,4 +11,4 @@ tasks:
   up:
     cmds:
       - docker-compose up -d --build
-      - docker exec -it spocon-backend_spocon-backend_1 go run tools/migrate.go
+      - docker exec -it spocon-backend_spocon-backend_1 go run -tags=migration_setup ./internal/tools/migrations/setup.go
