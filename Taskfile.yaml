@@ -5,10 +5,24 @@ vars:
 
 tasks:
   setup:
+    desc: "開発に必要なGo製ツールをインストールします。"
     cmds:
       - go env -w GOBIN=$(pwd)/bin
       - go install $(go list -e -f {{ "'{{ " }} {{.JOIN_COMMAND}} {{ "}}' " }} tools/tools.go)
   up:
+    desc: "spocon-backendで利用するコンテナ郡を立ち上げます。"
     cmds:
       - docker-compose up -d --build
-      - docker exec -it spocon-backend_spocon-backend_1 go run -tags=migration_setup ./internal/tools/migrations/setup.go
+      - docker exec -it spocon-backend_spocon-backend_1 go run -tags=migrate ./internal/tools/migrations/main.go up
+  migration-up:
+    desc: "マイグレーションを実行します。"
+    cmds:
+      - docker exec -it spocon-backend_spocon-backend_1 go run -tags=migrate ./internal/tools/migrations/main.go up
+  migration-down:
+    desc: "マイグレーションを戻して、テーブル削除まで行います。"
+    cmds:
+      - docker exec -it spocon-backend_spocon-backend_1 go run -tags=migrate ./internal/tools/migrations/main.go down
+  migration-force:
+    desc: "引数に指定したマイグレーションファイルのバージョンに強制的に戻し、マイグレーションの再実行が可能な状態にします"
+    cmds:
+      - docker exec -it spocon-backend_spocon-backend_1 go run -tags=migrate ./internal/tools/migrations/main.go force {{.CLI_ARGS}}

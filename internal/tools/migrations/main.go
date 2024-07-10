@@ -1,5 +1,5 @@
-//go:build migration_setup
-// +build migration_setup
+//go:build migrate
+// +build migrate
 
 package main
 
@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -54,9 +55,36 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
-		log.Fatal(err)
+	if len(os.Args) < 2 {
+		log.Fatalf("No command provided. Use up, down, or force <version>.")
 	}
 
-	log.Println("Migration up completed successfully.")
+	command := os.Args[1]
+
+	switch command {
+	case "up":
+		if err := m.Up(); err != nil && err != migrate.ErrNoChange {
+			log.Fatal(err)
+		}
+		log.Println("Migration up completed successfully.")
+	case "down":
+		if err := m.Down(); err != nil && err != migrate.ErrNoChange {
+			log.Fatal(err)
+		}
+		log.Println("Migration down completed successfully.")
+	case "force":
+		if len(os.Args) < 3 {
+			log.Fatalf("No version provided.")
+		}
+		version, err := strconv.Atoi(os.Args[2])
+		if err != nil {
+			log.Fatalf("Invalid version number: %v", err)
+		}
+		if err := m.Force(version); err != nil {
+			log.Fatal(err)
+		}
+		log.Println("Migration force completed successfully.")
+	default:
+		log.Fatalf("Invalid command provided. Use up, down, or force <version>.", command)
+	}
 }
