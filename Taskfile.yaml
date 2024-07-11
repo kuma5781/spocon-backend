@@ -1,14 +1,14 @@
 version: "3"
 
 vars:
+  ADD_PATH: env PATH="$(pwd)/bin:$PATH"
   JOIN_COMMAND: join .Imports " "
 
 tasks:
   setup:
     desc: "開発に必要なGo製ツールをインストールします。"
-    cmds:
-      - go env -w GOBIN=$(pwd)/bin
-      - go install $(go list -e -f {{ "'{{ " }} {{.JOIN_COMMAND}} {{ "}}' " }} tools/tools.go)
+    cmds: 
+      - GOBIN=$(pwd)/bin go install $(go list -e -f {{ "'{{ " }} {{.JOIN_COMMAND}} {{ "}}' " }} tools/tools.go)
   up:
     desc: "spocon-backendで利用するコンテナ郡を立ち上げます。"
     cmds:
@@ -30,3 +30,8 @@ tasks:
     desc: "引数に指定したマイグレーションファイルのバージョンまでマイグレーションを実行します。マイグレーションを適用したい場合は正の数、戻したい場合は負の数を指定する。"
     cmds:
       - docker exec -it spocon-backend_spocon-backend_1 go run -tags=migrate ./internal/tools/migrations/main.go step {{.CLI_ARGS}}
+  oapi:
+    desc: "OpenAPIの定義からGoのコードを生成します。"
+    cmds:
+      - "{{.ADD_PATH}} oapi-codegen -generate echo-server -o ./internal/openapi/server.gen.go ./openapi/openapi.yaml"
+      - "{{.ADD_PATH}} oapi-codegen -generate types -o ./internal/openapi/types.gen.go ./openapi/openapi.yaml"
