@@ -84,6 +84,18 @@ func main() {
 			log.Fatal(err)
 		}
 		log.Println("Migration force completed successfully.")
+	case "step":
+		if len(os.Args) < 3 {
+			log.Fatalf("No step number provided.")
+		}
+		num, err := strconv.Atoi(os.Args[2])
+		if err != nil {
+			log.Fatalf("Invalid from number: %v", err)
+		}
+		if err := m.Steps(num); err != nil {
+			log.Fatal(err)
+		}
+		log.Println("Migration step completed successfully.")
 	default:
 		log.Fatalf("Invalid command provided. Use up, down, or force <version>.", command)
 	}
