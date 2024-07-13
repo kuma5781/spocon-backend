@@ -1,4 +1,9 @@
 {
     "go.formatTool": "gofmt",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "go.lintTool": "golangci-lint",
+    "go.lintFlags": [
+        "--config=${workspaceFolder}/.golangci.yaml",
+        "--fast"
+    ]
 }

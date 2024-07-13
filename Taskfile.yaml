@@ -4,6 +4,7 @@ vars:
   ADD_PATH: env PATH="$(pwd)/bin:$PATH"
   JOIN_COMMAND: join .Imports " "
   APP_CONTAINER_NAME: spocon-backend_spocon-backend_1
+  GOLANGCI_LINT_VERSION: v1.59.1
 
 tasks:
   setup:
@@ -15,6 +16,14 @@ tasks:
     cmds:
       - docker-compose up -d --build
       - task: migration-up
+  lint:
+    desc: "Goの静的解析ツールを実行します。静的解析でルールに準拠していない場合はエラーになります。"
+    cmds:
+      - docker run --rm -v $(pwd):/app -v ~/.cache/golangci-lint/{{.GOLANGCI_LINT_VERSION}}:/root/.cache -w /app golangci/golangci-lint:{{.GOLANGCI_LINT_VERSION}} golangci-lint run -v --timeout 5m
+  lintfix:
+    desc: "Goの静的解析ツールを実行します。静的解析でルールに準拠していない場合は修正します。"
+    cmds:
+      - docker run --rm -v $(pwd):/app -v ~/.cache/golangci-lint/{{.GOLANGCI_LINT_VERSION}}:/root/.cache -w /app golangci/golangci-lint:{{.GOLANGCI_LINT_VERSION}} golangci-lint run --fix -v --timeout 5m
   migration-up:
     desc: "全てのマイグレーションを実行します。"
     cmds:
