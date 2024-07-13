@@ -15,7 +15,7 @@ tasks:
     desc: "spocon-backendで利用するコンテナ郡を立ち上げます。"
     cmds:
       - docker-compose up -d --build
-      - task: migration-up
+      - task: migration:up
   lint:
     desc: "Goの静的解析ツールを実行します。静的解析でルールに準拠していない場合はエラーになります。"
     cmds:
@@ -24,22 +24,26 @@ tasks:
     desc: "Goの静的解析ツールを実行します。静的解析でルールに準拠していない場合は修正します。"
     cmds:
       - docker run --rm -v $(pwd):/app -v ~/.cache/golangci-lint/{{.GOLANGCI_LINT_VERSION}}:/root/.cache -w /app golangci/golangci-lint:{{.GOLANGCI_LINT_VERSION}} golangci-lint run --fix -v --timeout 5m
-  migration-up:
+  migration:up:
     desc: "全てのマイグレーションを実行します。"
     cmds:
       - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./internal/tools/migrations/main.go up
-  migration-down:
+  migration:down:
     desc: "全てのマイグレーションを戻して、テーブル削除まで行います。"
     cmds:
       - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./internal/tools/migrations/main.go down
-  migration-force:
+  migration:force:
     desc: "引数に指定したマイグレーションファイルのバージョンに強制的に戻し、マイグレーションの再実行が可能な状態にします。"
     cmds:
       - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./internal/tools/migrations/main.go force {{.CLI_ARGS}}
-  migration-step:
+  migration:step:
     desc: "引数に指定したマイグレーションファイルのバージョンまでマイグレーションを実行します。マイグレーションを適用したい場合は正の数、戻したい場合は負の数を指定する。"
     cmds:
       - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./internal/tools/migrations/main.go step {{.CLI_ARGS}}
+  migration:create-file:
+    desc: "引数に指定したファイル名で新しいマイグレーションファイルを作成します。"
+    cmds:
+      - go run github.com/golang-migrate/migrate/v4/cmd/migrate create -ext sql -dir database/migrations -seq {{.CLI_ARGS}}
   oapi:
     desc: "OpenAPIの定義からGoのコードを生成します。"
     cmds:
