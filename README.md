@@ -68,14 +68,14 @@ task up
 - データベースへのアクセスを管理する
 
 #### internal/openapi
-- openapi.yamlから生成したコードを管理
+- openapi.yamlから生成したコードを管理する
 
 #### internal/usecase
 - handlerから呼び出される
 - ドメイン層の処理を呼び出し、ユースケースの実現を行う
 
 ### openapi
-- APIドキュメントを管理
+- APIドキュメントを管理する
 - このドキュメントからAPIインターフェースのコード生成を行う
 
 ### tools
