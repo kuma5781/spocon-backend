@@ -24,10 +24,7 @@ func (h *Handlers) GetGrades(c echo.Context) error {
 func toGetGradesResponse(grades []usecase.GradeDto) *openapi.GetGradesResponse {
 	var res openapi.GetGradesResponse
 	for _, grade := range grades {
-		res.Grades = append(res.Grades, struct {
-			Id   string `json:"id"`
-			Name string `json:"name"`
-		}{
+		res.Grades = append(res.Grades, openapi.Grade{
 			Id:   grade.Id,
 			Name: grade.Name,
 		},

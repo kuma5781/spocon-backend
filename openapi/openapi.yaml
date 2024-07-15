@@ -77,15 +77,17 @@ components:
         grades:
           type: array
           items:
-            type: object
-            required:
-              - id
-              - name
-            properties:
-              id:
-                type: string
-              name:
-                type: string
+            $ref: '#/components/schemas/Grade'
+    Grade:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
     GetUserResponse:
       type: object
       required:

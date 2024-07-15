@@ -11,10 +11,7 @@ type CreateUserResponse struct {
 
 // GetGradesResponse defines model for GetGradesResponse.
 type GetGradesResponse struct {
-	Grades []struct {
-		Id   string `json:"id"`
-		Name string `json:"name"`
-	} `json:"grades"`
+	Grades []Grade `json:"grades"`
 }
 
 // GetUserResponse defines model for GetUserResponse.
@@ -22,6 +19,12 @@ type GetUserResponse struct {
 	Email string `json:"email"`
 	Id    string `json:"id"`
 	Name  string `json:"name"`
+}
+
+// Grade defines model for Grade.
+type Grade struct {
+	Id   string `json:"id"`
+	Name string `json:"name"`
 }
 
 // GetUserParams defines parameters for GetUser.
