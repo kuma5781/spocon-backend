@@ -12,14 +12,13 @@ type GradeHandler struct {
 	GradeUsecase usecase.GradeUsecase
 }
 
-func (h *Handlers) GetGrades(ctx echo.Context) error {
-	// ctx := c.Request().Context()
+func (h *Handlers) GetGrades(c echo.Context) error {
 	grades, err := h.GradeHandler.GradeUsecase.GetGrades()
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err)
+		return c.JSON(http.StatusInternalServerError, err)
 	}
 	res := toGetGradesResponse(grades)
-	return ctx.JSON(http.StatusOK, res)
+	return c.JSON(http.StatusOK, res)
 }
 
 func toGetGradesResponse(grades []usecase.GradeDto) *openapi.GetGradesResponse {
