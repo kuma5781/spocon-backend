@@ -29,41 +29,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetGradesResponse'
-  /user:
-    get:
-      summary: ユーザーの取得
-      operationId: get-user
+  /teams:
+    post: 
+      summary: チームの登録
+      operationId: create-team
       tags:
-        - user
-      parameters:
-        - name: id
-          in: query
-          description: ユーザーID
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ユーザーの取得が成功した場合
-          content: 
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetUserResponse'
-        '400':
-          description: リクエスト形式が正しくない場合
-          content: {}
-    post:
-      summary: ユーザーの作成
-      operationId: create-user
-      tags:
-        - user
+        - team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamRequest'
+              type: object
+              required:
+                - name
+                - sport_id
+                - grade_id
+                - icon_path
+                - description
+                - address_state
+                - address_city
+              properties:
+                name:
+                  type: string
+                sport_id:
+                  type: string
+                grade_id:
+                  type: string
+                icon_path:
+                  type: string
+                description:
+                  type: string
+                address_state:
+                  type: string
+                address_city:
+                  type: string
       responses:
         '201':
-          description: ユーザーの作成が成功した場合
-          content: 
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateUserResponse'
+          description: チームの作成が成功した場合
+          content: {}
         '400':
           description: リクエスト形式が正しくない場合
           content: {}
@@ -88,26 +93,28 @@ components:
           type: string
         name:
           type: string
-    GetUserResponse:
-      type: object
-      required:
-        - id
-        - name
-        - email
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        email:
-          type: string
-    CreateUserResponse:
+    CreateTeamRequest:
       type: object
       required:
         - name
-        - email
+        - sport_id
+        - grade_id
+        - icon_path
+        - description
+        - address_state
+        - address_city
       properties:
         name:
           type: string
-        email:
+        sport_id:
+          type: string
+        grade_id:
+          type: string
+        icon_path:
+          type: string
+        description:
+          type: string
+        address_state:
+          type: string
+        address_city:
           type: string

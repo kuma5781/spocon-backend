@@ -2,7 +2,10 @@ package main
 
 import (
 	"spocon-backend/internal/app"
+	repository "spocon-backend/internal/domain/repository"
+	"spocon-backend/internal/handler"
 	"spocon-backend/internal/openapi"
+	"spocon-backend/internal/usecase"
 
 	"github.com/labstack/echo/v4"
 )
@@ -13,13 +16,15 @@ func main() {
 	db, err := app.InitDB()
 
 	if err != nil {
-		e.Logger.Fatal(err) // TODO: エラー時のハンドリング
+		e.Logger.Fatal(err)
 	}
 
-	r := app.NewRepositories(db)
-	u := app.NewUsecases(r)
-	h := app.NewHandlers(u)
+	r := repository.NewRepositories(db)
+	u := usecase.NewUsecases(r)
+	h := handler.NewHandlers(u)
 	openapi.RegisterHandlers(e, h)
+
+	app.InitMiddleware(e)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
