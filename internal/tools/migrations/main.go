@@ -25,8 +25,8 @@ func main() {
 	password := os.Getenv("MYSQL_PASSWORD")
 	database := os.Getenv("MYSQL_DATABASE")
 
-	dns := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, password, host, port, database)
-	db, err := sql.Open("mysql", dns)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, password, host, port, database)
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatalf("Failed to open database connection: %v", err)
 	}
@@ -49,7 +49,7 @@ func main() {
 
 	m, err := migrate.New(
 		"file://database/migrations",
-		"mysql://"+dns,
+		"mysql://"+dsn,
 	)
 	if err != nil {
 		log.Fatal(err)
