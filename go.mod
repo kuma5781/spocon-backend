@@ -1,4 +1,4 @@
-module sample
+module spocon-backend
 
 go 1.22.3
 

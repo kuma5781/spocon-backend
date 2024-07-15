@@ -9,6 +9,14 @@ type CreateUserResponse struct {
 	Name  string `json:"name"`
 }
 
+// GetGradesResponse defines model for GetGradesResponse.
+type GetGradesResponse struct {
+	Grades []struct {
+		Id   string `json:"id"`
+		Name string `json:"name"`
+	} `json:"grades"`
+}
+
 // GetUserResponse defines model for GetUserResponse.
 type GetUserResponse struct {
 	Email string `json:"email"`

@@ -26,8 +26,7 @@ task up
 ## ディレクトリ構成
 
 ```
-.
-└── spocon-backend/
+spocon-backend/
     ├── cmd
     ├── internal/
     │   ├── domain/

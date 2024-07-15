@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	"sample/internal/openapi"
+	"spocon-backend/internal/openapi"
 
 	"github.com/labstack/echo/v4"
 )

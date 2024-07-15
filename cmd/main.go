@@ -1,8 +1,8 @@
 package main
 
 import (
-	"sample/internal/handler"
-	"sample/internal/openapi"
+	"spocon-backend/internal/app"
+	"spocon-backend/internal/openapi"
 
 	"github.com/labstack/echo/v4"
 )
@@ -10,9 +10,16 @@ import (
 func main() {
 	e := echo.New()
 
-	s := &handler.Handlers{}
+	db, err := app.InitDB()
 
-	openapi.RegisterHandlers(e, s)
+	if err != nil {
+		e.Logger.Fatal(err) // TODO: エラー時のハンドリング
+	}
+
+	r := app.NewRepositories(db)
+	u := app.NewUsecases(r)
+	h := app.NewHandlers(u)
+	openapi.RegisterHandlers(e, h)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

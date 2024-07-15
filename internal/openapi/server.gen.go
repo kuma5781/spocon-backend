@@ -13,6 +13,9 @@ import (
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// グレード情報一覧の取得する
+	// (GET /grades)
+	GetGrades(ctx echo.Context) error
 	// ヘルスチェック
 	// (GET /health)
 	HealthCheck(ctx echo.Context) error
@@ -27,6 +30,15 @@ type ServerInterface interface {
 // ServerInterfaceWrapper converts echo contexts to parameters.
 type ServerInterfaceWrapper struct {
 	Handler ServerInterface
+}
+
+// GetGrades converts echo context to params.
+func (w *ServerInterfaceWrapper) GetGrades(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetGrades(ctx)
+	return err
 }
 
 // HealthCheck converts echo context to params.
@@ -93,6 +105,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
+	router.GET(baseURL+"/grades", wrapper.GetGrades)
 	router.GET(baseURL+"/health", wrapper.HealthCheck)
 	router.GET(baseURL+"/user", wrapper.GetUser)
 	router.POST(baseURL+"/user", wrapper.CreateUser)
