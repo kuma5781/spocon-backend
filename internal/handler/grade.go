@@ -6,6 +6,8 @@ import (
 	"spocon-backend/internal/usecase"
 
 	"github.com/labstack/echo/v4"
+
+	"github.com/samber/lo"
 )
 
 type GradeHandler struct {
@@ -21,14 +23,14 @@ func (h *Handlers) GetGrades(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-func toGetGradesResponse(grades []usecase.GradeDto) *openapi.GetGradesResponse {
-	var res openapi.GetGradesResponse
-	for _, grade := range grades {
-		res.Grades = append(res.Grades, openapi.Grade{
-			Id:   grade.Id,
-			Name: grade.Name,
-		},
-		)
+func toGetGradesResponse(gradeDtoList []usecase.GradeDto) *openapi.GetGradesResponse {
+	grades := lo.Map(gradeDtoList, func(gradeDto usecase.GradeDto, _ int) openapi.Grade {
+		return openapi.Grade{
+			Id:   gradeDto.Id,
+			Name: gradeDto.Name,
+		}
+	})
+	return &openapi.GetGradesResponse{
+		Grades: grades,
 	}
-	return &res
 }
