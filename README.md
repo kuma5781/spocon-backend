@@ -29,6 +29,7 @@ task up
 spocon-backend/
     ├── cmd
     ├── internal/
+    │   ├── app/
     │   ├── domain/
     │   │   ├── model
     │   │   ├── repository
@@ -49,6 +50,9 @@ spocon-backend/
 - アプリケーションで利用するロジックは基本的にinternal配下で管理する
 - Spoconのアプリケーションは他のモジュールに公開しない想定
 - internal配下にアプリケーションのロジックを置くことで、他のモジュールから参照されないことを前提に開発を進めることができ、後方互換を気にすることなく変更できる作りとする
+
+#### internal/app
+- アプリケーションの基盤となる設定を管理する
 
 #### internal/domain
 
