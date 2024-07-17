@@ -6,6 +6,7 @@ import (
 
 type Usecases struct {
 	GradeUsecase GradeUsecase
+	TeamUsecase  TeamUsecase
 }
 
 func NewUsecases(r *r.Repositories) *Usecases {

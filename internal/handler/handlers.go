@@ -12,6 +12,6 @@ func NewHandlers(u *usecase.Usecases) *Handlers {
 	return &Handlers{
 		HealthHandler: HealthHandler{},
 		GradeHandler:  GradeHandler{GradeUsecase: u.GradeUsecase},
-		TeamHandler:   TeamHandler{},
+		TeamHandler:   TeamHandler{TeamUsecase: u.TeamUsecase},
 	}
 }

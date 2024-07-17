@@ -1,13 +1,13 @@
-package domain
+package repository
 
 import (
 	"database/sql"
-	domain "spocon-backend/internal/domain/model"
+	g "spocon-backend/internal/domain/model/grade"
 	"spocon-backend/internal/infra"
 )
 
 type GradeRepository interface {
-	FetchAll() ([]domain.GradeEntity, error)
+	FetchAll() ([]g.GradeEntity, error)
 }
 
 func NewGradeRepository(db *sql.DB) GradeRepository {
