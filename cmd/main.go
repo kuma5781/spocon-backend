@@ -12,6 +12,7 @@ import (
 
 func main() {
 	e := echo.New()
+	app.InitMiddleware(e)
 
 	db, err := app.InitDB()
 
@@ -23,8 +24,6 @@ func main() {
 	u := usecase.NewUsecases(r)
 	h := handler.NewHandlers(u)
 	openapi.RegisterHandlers(e, h)
-
-	app.InitMiddleware(e)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

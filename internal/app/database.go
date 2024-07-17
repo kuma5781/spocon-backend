@@ -3,7 +3,9 @@ package app
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
+	"time"
 )
 
 func InitDB() (*sql.DB, error) {
@@ -20,7 +22,18 @@ func InitDB() (*sql.DB, error) {
 		return nil, err
 	}
 
-	if err = db.Ping(); err != nil {
+	// 最大10回リトライして接続を確認する
+	for i := 0; i < 10; i++ {
+		err = db.Ping()
+		if err == nil {
+			log.Println("Database connection successful.")
+			break
+		}
+		log.Printf("Database connection failed. %v", err)
+		time.Sleep(3 * time.Second)
+	}
+
+	if err != nil {
 		return nil, err
 	}
 
