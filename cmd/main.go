@@ -2,7 +2,7 @@ package main
 
 import (
 	"spocon-backend/internal/app"
-	repository "spocon-backend/internal/domain/repository"
+	"spocon-backend/internal/domain/repository"
 	"spocon-backend/internal/handler"
 	"spocon-backend/internal/openapi"
 	"spocon-backend/internal/usecase"
