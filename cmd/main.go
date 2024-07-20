@@ -2,8 +2,8 @@ package main
 
 import (
 	"spocon-backend/internal/app"
-	"spocon-backend/internal/domain/repository"
 	"spocon-backend/internal/handler"
+	"spocon-backend/internal/infra"
 	"spocon-backend/internal/openapi"
 	"spocon-backend/internal/usecase"
 
@@ -20,7 +20,7 @@ func main() {
 		e.Logger.Fatal(err)
 	}
 
-	r := repository.NewRepositories(db)
+	r := infra.NewRepositories(db)
 	u := usecase.NewUsecases(r)
 	h := handler.NewHandlers(u)
 	openapi.RegisterHandlers(e, h)
