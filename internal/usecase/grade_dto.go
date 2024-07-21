@@ -7,7 +7,7 @@ type GradeDto struct {
 	Name string
 }
 
-func from(e *g.GradeEntity) GradeDto {
+func from(e *g.Grade) GradeDto {
 	return GradeDto{
 		Id:   e.Id,
 		Name: e.Name,

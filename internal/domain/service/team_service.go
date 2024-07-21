@@ -18,8 +18,8 @@ func (s *TeamService) Create(
 	description string,
 	addressState string,
 	addressCity string,
-) *t.TeamEntity {
-	return &t.TeamEntity{
+) *t.Team {
+	return &t.Team{
 		Id:           id,
 		Uuid:         uuid,
 		Name:         name,

@@ -4,7 +4,7 @@ import (
 	g "spocon-backend/internal/domain/model/grade"
 )
 
-type TeamEntity struct {
+type Team struct {
 	Id           TeamId
 	Uuid         string
 	Name         string
@@ -14,6 +14,4 @@ type TeamEntity struct {
 	Description  string
 	AddressState string
 	AddressCity  string
-	CreateAt     string
-	UpdateAt     string
 }

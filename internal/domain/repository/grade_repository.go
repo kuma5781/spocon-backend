@@ -5,5 +5,5 @@ import (
 )
 
 type GradeRepository interface {
-	FetchAll() ([]g.GradeEntity, error)
+	FetchAll() ([]g.Grade, error)
 }

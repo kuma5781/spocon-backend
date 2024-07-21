@@ -11,17 +11,17 @@ type GradeRepositoryImpl struct {
 	DB *sql.DB
 }
 
-func (ri *GradeRepositoryImpl) FetchAll() ([]g.GradeEntity, error) {
-	rows, err := ri.DB.Query("SELECT * FROM grades")
+func (ri *GradeRepositoryImpl) FetchAll() ([]g.Grade, error) {
+	rows, err := ri.DB.Query("SELECT id, name FROM grades")
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var grades []g.GradeEntity
+	var grades []g.Grade
 	for rows.Next() {
-		var grade g.GradeEntity
-		if err := rows.Scan(&grade.Id, &grade.Name, &grade.CreatedAt, &grade.UpdatedAt); err != nil {
+		var grade g.Grade
+		if err := rows.Scan(&grade.Id, &grade.Name); err != nil {
 			return nil, err
 		}
 		grades = append(grades, grade)
