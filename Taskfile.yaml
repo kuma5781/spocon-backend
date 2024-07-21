@@ -27,19 +27,19 @@ tasks:
   migration:up:
     desc: "全てのマイグレーションを実行します。"
     cmds:
-      - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./internal/tools/migrations/main.go up
+      - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./operation/migrations/main.go up
   migration:down:
     desc: "全てのマイグレーションを戻して、テーブル削除まで行います。"
     cmds:
-      - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./internal/tools/migrations/main.go down
+      - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./operation/migrations/main.go down
   migration:force:
     desc: "引数に指定したマイグレーションファイルのバージョンに強制的に戻し、マイグレーションの再実行が可能な状態にします。"
     cmds:
-      - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./internal/tools/migrations/main.go force {{.CLI_ARGS}}
+      - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./operation/migrations/main.go force {{.CLI_ARGS}}
   migration:step:
     desc: "引数に指定したマイグレーションファイルのバージョンまでマイグレーションを実行します。マイグレーションを適用したい場合は正の数、戻したい場合は負の数を指定する。"
     cmds:
-      - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./internal/tools/migrations/main.go step {{.CLI_ARGS}}
+      - docker exec -it {{.APP_CONTAINER_NAME}} go run -tags=migrate ./operation/migrations/main.go step {{.CLI_ARGS}}
   migration:create-file:
     desc: "引数に指定したファイル名で新しいマイグレーションファイルを作成します。"
     cmds:
