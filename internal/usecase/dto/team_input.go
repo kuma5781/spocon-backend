@@ -1,4 +1,4 @@
-package usecase
+package dto
 
 type TeamCreateInput struct {
 	TeamName     string

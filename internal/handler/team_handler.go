@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	conv "spocon-backend/internal/handler/converter"
 	"spocon-backend/internal/openapi"
 	"spocon-backend/internal/usecase"
 
@@ -17,22 +18,10 @@ func (h *Handlers) CreateTeam(c echo.Context) error {
 	if err := c.Bind(&body); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
-	input := toCreateTeamInput(&body)
+	input := conv.ToCreateTeamInput(&body)
 	if err := h.TeamHandler.TeamUsecase.CreateTeam(input); err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 
 	return nil
-}
-
-func toCreateTeamInput(req *openapi.CreateTeamRequest) *usecase.TeamCreateInput {
-	return &usecase.TeamCreateInput{
-		TeamName:     req.Name,
-		SportId:      req.SportId,
-		GradeId:      req.GradeId,
-		IconPath:     req.IconPath,
-		Description:  req.Description,
-		AddressCity:  req.AddressCity,
-		AddressState: req.AddressState,
-	}
 }

@@ -2,12 +2,10 @@ package handler
 
 import (
 	"net/http"
-	"spocon-backend/internal/openapi"
+	conv "spocon-backend/internal/handler/converter"
 	"spocon-backend/internal/usecase"
 
 	"github.com/labstack/echo/v4"
-
-	"github.com/samber/lo"
 )
 
 type GradeHandler struct {
@@ -19,18 +17,6 @@ func (h *Handlers) GetGrades(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
-	res := toGetGradesResponse(grades)
+	res := conv.ToGetGradesResponse(grades)
 	return c.JSON(http.StatusOK, res)
-}
-
-func toGetGradesResponse(gradeDtoList []usecase.GradeDto) *openapi.GetGradesResponse {
-	grades := lo.Map(gradeDtoList, func(gradeDto usecase.GradeDto, _ int) openapi.Grade {
-		return openapi.Grade{
-			Id:   gradeDto.Id,
-			Name: gradeDto.Name,
-		}
-	})
-	return &openapi.GetGradesResponse{
-		Grades: grades,
-	}
 }
