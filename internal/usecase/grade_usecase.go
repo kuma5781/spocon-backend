@@ -16,14 +16,14 @@ func NewGradeUsecase(r r.GradeRepository) GradeUsecase {
 }
 
 func (u *GradeUsecase) GetGrades() ([]dto.GradeOutput, error) {
-	entities, err := u.GradeRepository.FetchAll()
+	grades, err := u.GradeRepository.FetchAll()
 	if err != nil {
 		return nil, err
 	}
-	grades := make([]dto.GradeOutput, len(entities))
-	for i, entity := range entities {
-		grades[i] = dto.From(&entity)
+	outputs := make([]dto.GradeOutput, len(grades))
+	for i, grade := range grades {
+		outputs[i] = dto.From(&grade)
 	}
 
-	return grades, nil
+	return outputs, nil
 }
