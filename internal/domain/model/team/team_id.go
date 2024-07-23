@@ -1,4 +1,4 @@
-package team
+package model
 
 type TeamId struct {
 	id string

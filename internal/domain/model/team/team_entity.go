@@ -1,4 +1,4 @@
-package team
+package model
 
 import (
 	g "spocon-backend/internal/domain/model/grade"

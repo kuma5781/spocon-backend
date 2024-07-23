@@ -1,4 +1,4 @@
-package grade
+package model
 
 type GradeId struct {
 	id string
