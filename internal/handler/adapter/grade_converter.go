@@ -1,4 +1,4 @@
-package converter
+package adapter
 
 import (
 	"spocon-backend/internal/openapi"

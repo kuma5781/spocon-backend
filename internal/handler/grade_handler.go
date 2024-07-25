@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	conv "spocon-backend/internal/handler/converter"
+	conv "spocon-backend/internal/handler/adapter"
 	"spocon-backend/internal/usecase"
 
 	"github.com/labstack/echo/v4"
