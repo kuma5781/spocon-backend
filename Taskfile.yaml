@@ -3,7 +3,7 @@ version: "3"
 vars:
   ADD_PATH: env PATH="$(pwd)/bin:$PATH"
   JOIN_COMMAND: join .Imports " "
-  APP_CONTAINER_NAME: spocon-backend_spocon-backend_1
+  APP_CONTAINER_NAME: spocon-backend-ex
   GOLANGCI_LINT_VERSION: v1.59.1
 
 tasks:
@@ -16,6 +16,10 @@ tasks:
     cmds:
       - docker-compose up -d --build
       - task: migration:up
+  down:
+    desc: "spocon-backendで利用するコンテナ郡を停止します。"
+    cmds:
+      - docker-compose down
   lint:
     desc: "Goの静的解析ツールを実行します。静的解析でルールに準拠していない場合はエラーになります。"
     cmds:

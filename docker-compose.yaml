@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   spocon-backend:
+    container_name: spocon-backend-ex
     build:
       context: .
       dockerfile: Dockerfile
