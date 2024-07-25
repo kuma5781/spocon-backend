@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	conv "spocon-backend/internal/handler/adapter"
+	a "spocon-backend/internal/handler/adapter"
 	"spocon-backend/internal/usecase"
 
 	"github.com/labstack/echo/v4"
@@ -17,6 +17,6 @@ func (h *Handlers) GetGrades(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
-	res := conv.ToGetGradesResponse(grades)
+	res := a.ToGetGradesResponse(grades)
 	return c.JSON(http.StatusOK, res)
 }
