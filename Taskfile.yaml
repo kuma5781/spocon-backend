@@ -53,3 +53,7 @@ tasks:
     cmds:
       - "{{.ADD_PATH}} oapi-codegen -generate echo-server -o ./internal/openapi/server.gen.go ./openapi/openapi.yaml"
       - "{{.ADD_PATH}} oapi-codegen -generate types -o ./internal/openapi/types.gen.go ./openapi/openapi.yaml"
+  mockgen:
+    desc: "go:generateが指定されているファイルのinterfaceのmockを作成します。"
+    cmds:
+      - "{{.ADD_PATH}} go generate ./..."
