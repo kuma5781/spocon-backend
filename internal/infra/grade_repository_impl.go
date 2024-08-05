@@ -11,6 +11,10 @@ type GradeRepositoryImpl struct {
 	DB *sql.DB
 }
 
+func NewGradeRepositoryImpl(db *sql.DB) *GradeRepositoryImpl {
+	return &GradeRepositoryImpl{DB: db}
+}
+
 func (ri *GradeRepositoryImpl) FetchAll() ([]g.Grade, error) {
 	rows, err := ri.DB.Query("SELECT id, name FROM grades")
 	if err != nil {
