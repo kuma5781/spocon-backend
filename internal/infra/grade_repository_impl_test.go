@@ -3,6 +3,7 @@ package infra_test
 import (
 	"sort"
 	g "spocon-backend/internal/domain/model/grade"
+	model "spocon-backend/internal/domain/model/grade"
 	"spocon-backend/internal/infra"
 	"testing"
 
@@ -19,14 +20,14 @@ func TestFetchAll(t *testing.T) {
 			name: "Test FetchAll",
 			assertions: func(t *testing.T, actual []g.Grade) {
 				sort.Slice(actual, func(i, j int) bool {
-					return actual[i].Id < actual[j].Id
+					return actual[i].Id.Value() < actual[j].Id.Value()
 				})
 				expected := []g.Grade{
-					{Id: "1", Name: "小学生"},
-					{Id: "2", Name: "中学生"},
-					{Id: "3", Name: "高校生"},
-					{Id: "4", Name: "大学生"},
-					{Id: "5", Name: "社会人"},
+					{Id: model.NewGradeId("1"), Name: "小学生"},
+					{Id: model.NewGradeId("2"), Name: "中学生"},
+					{Id: model.NewGradeId("3"), Name: "高校生"},
+					{Id: model.NewGradeId("4"), Name: "大学生"},
+					{Id: model.NewGradeId("5"), Name: "社会人"},
 				}
 				assert.Equal(t, expected, actual)
 			},

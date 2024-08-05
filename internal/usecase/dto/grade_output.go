@@ -3,7 +3,7 @@ package dto
 import g "spocon-backend/internal/domain/model/grade"
 
 type GradeOutput struct {
-	Id   string
+	Id   g.GradeId
 	Name string
 }
 

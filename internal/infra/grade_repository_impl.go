@@ -23,11 +23,13 @@ func (ri *GradeRepositoryImpl) FetchAll() ([]g.Grade, error) {
 	defer rows.Close()
 
 	var grades []g.Grade
+	var id string
 	for rows.Next() {
 		var grade g.Grade
-		if err := rows.Scan(&grade.Id, &grade.Name); err != nil {
+		if err := rows.Scan(&id, &grade.Name); err != nil {
 			return nil, err
 		}
+		grade.Id = g.NewGradeId(id)
 		grades = append(grades, grade)
 	}
 

@@ -10,7 +10,7 @@ import (
 func ToGetGradesResponse(gradeDtoList []dto.GradeOutput) *openapi.GetGradesResponse {
 	grades := lo.Map(gradeDtoList, func(g dto.GradeOutput, _ int) openapi.Grade {
 		return openapi.Grade{
-			Id:   g.Id,
+			Id:   g.Id.Value(),
 			Name: g.Name,
 		}
 	})
