@@ -5,15 +5,15 @@ import (
 	"os"
 	"testing"
 
-	"spocon-backend/test"
+	"spocon-backend/testutil"
 )
 
-var testDB *test.TestDB
+var testDB *testutil.TestDB
 
 func TestMain(m *testing.M) {
 
 	ctx := context.Background()
-	testDB = test.SetupDB(ctx, m)
+	testDB = testutil.SetupDB(ctx, m)
 	defer testDB.TearDown()
 
 	code := m.Run()
