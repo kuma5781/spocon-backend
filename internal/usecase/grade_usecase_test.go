@@ -5,7 +5,6 @@ import (
 	model "spocon-backend/internal/domain/model/grade"
 	"spocon-backend/internal/domain/repository/mocks"
 	"spocon-backend/internal/usecase"
-	"spocon-backend/internal/usecase/dto"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -22,7 +21,7 @@ func TestGetGrades(t *testing.T) {
 	tests := []struct {
 		name         string
 		expectedCall func()
-		assertions   func(t *testing.T, actual []dto.GradeOutput)
+		assertions   func(t *testing.T, actual []g.Grade)
 	}{
 		{
 			name: "グレードの一覧を正常に取得することができること",
@@ -32,8 +31,8 @@ func TestGetGrades(t *testing.T) {
 					{Id: model.NewGradeId("2"), Name: "grade2"},
 				}, nil)
 			},
-			assertions: func(t *testing.T, actual []dto.GradeOutput) {
-				expected := []dto.GradeOutput{
+			assertions: func(t *testing.T, actual []g.Grade) {
+				expected := []g.Grade{
 					{Id: model.NewGradeId("1"), Name: "grade1"},
 					{Id: model.NewGradeId("2"), Name: "grade2"},
 				}
