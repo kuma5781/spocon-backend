@@ -10,6 +10,6 @@ type RepositoryImpls struct {
 
 func NewRepositories(db *sql.DB) *r.Repositories {
 	return &r.Repositories{
-		GradeRepository: &GradeRepositoryImpl{DB: db},
+		GradeRepository: NewGradeRepositoryImpl(db),
 	}
 }
