@@ -1,8 +1,8 @@
 package usecase
 
 import (
+	g "spocon-backend/internal/domain/model/grade"
 	r "spocon-backend/internal/domain/repository"
-	"spocon-backend/internal/usecase/dto"
 )
 
 type GradeUsecase struct {
@@ -15,15 +15,11 @@ func NewGradeUsecase(r r.GradeRepository) GradeUsecase {
 	}
 }
 
-func (u *GradeUsecase) GetGrades() ([]dto.GradeOutput, error) {
+func (u *GradeUsecase) GetGrades() ([]g.Grade, error) {
 	grades, err := u.GradeRepository.FetchAll()
 	if err != nil {
 		return nil, err
 	}
-	outputs := make([]dto.GradeOutput, len(grades))
-	for i, grade := range grades {
-		outputs[i] = dto.From(&grade)
-	}
 
-	return outputs, nil
+	return grades, nil
 }

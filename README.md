@@ -39,6 +39,8 @@ spocon-backend/
     │   ├── openapi
     │   └── usecase
     ├── openapi
+    ├── operation
+    ├── testutil
     └── tools
 ```
 
@@ -80,6 +82,12 @@ spocon-backend/
 ### openapi
 - APIドキュメントを管理する
 - このドキュメントからAPIインターフェースのコード生成を行う
+
+### operation
+- プロダクトコードでは利用しない運用ツールを管理する
+
+### testutil
+- プロジェクト配下の全てのテストコードから利用可能な汎用的な処理を管理する
 
 ### tools
 - Go製ツールのインポート定義を管理する

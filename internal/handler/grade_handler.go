@@ -12,6 +12,12 @@ type GradeHandler struct {
 	GradeUsecase usecase.GradeUsecase
 }
 
+func NewGradeHandler(u usecase.GradeUsecase) GradeHandler {
+	return GradeHandler{
+		GradeUsecase: u,
+	}
+}
+
 func (h *Handlers) GetGrades(c echo.Context) error {
 	grades, err := h.GradeHandler.GradeUsecase.GetGrades()
 	if err != nil {

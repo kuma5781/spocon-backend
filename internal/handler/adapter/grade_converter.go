@@ -1,16 +1,16 @@
 package adapter
 
 import (
+	g "spocon-backend/internal/domain/model/grade"
 	"spocon-backend/internal/openapi"
-	"spocon-backend/internal/usecase/dto"
 
 	"github.com/samber/lo"
 )
 
-func ToGetGradesResponse(gradeDtoList []dto.GradeOutput) *openapi.GetGradesResponse {
-	grades := lo.Map(gradeDtoList, func(g dto.GradeOutput, _ int) openapi.Grade {
+func ToGetGradesResponse(list []g.Grade) *openapi.GetGradesResponse {
+	grades := lo.Map(list, func(g g.Grade, _ int) openapi.Grade {
 		return openapi.Grade{
-			Id:   g.Id,
+			Id:   g.Id.Value(),
 			Name: g.Name,
 		}
 	})

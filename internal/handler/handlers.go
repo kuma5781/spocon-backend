@@ -10,8 +10,8 @@ type Handlers struct {
 
 func NewHandlers(u *usecase.Usecases) *Handlers {
 	return &Handlers{
-		HealthHandler: HealthHandler{},
-		GradeHandler:  GradeHandler{GradeUsecase: u.GradeUsecase},
-		TeamHandler:   TeamHandler{TeamUsecase: u.TeamUsecase},
+		HealthHandler: NewHealthHandler(),
+		GradeHandler:  NewGradeHandler(u.GradeUsecase),
+		TeamHandler:   NewTeamHandler(u.TeamUsecase),
 	}
 }

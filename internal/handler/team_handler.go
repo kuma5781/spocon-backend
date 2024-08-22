@@ -13,6 +13,12 @@ type TeamHandler struct {
 	TeamUsecase usecase.TeamUsecase
 }
 
+func NewTeamHandler(u usecase.TeamUsecase) TeamHandler {
+	return TeamHandler{
+		TeamUsecase: u,
+	}
+}
+
 func (h *Handlers) CreateTeam(c echo.Context) error {
 	var body openapi.CreateTeamRequest
 	if err := c.Bind(&body); err != nil {

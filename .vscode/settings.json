@@ -5,5 +5,5 @@
     "go.lintFlags": [
         "--config=${workspaceFolder}/.golangci.yaml",
         "--fast"
-    ]
+    ],
 }
