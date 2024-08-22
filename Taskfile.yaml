@@ -57,3 +57,15 @@ tasks:
     desc: "go:generateが指定されているファイルのinterfaceのmockを作成します。"
     cmds:
       - "{{.ADD_PATH}} go generate ./..."
+  test:
+    desc: "全てのテストを実行します。"
+    cmds:
+      - go test -race `go list ./...`
+  test:db:
+    desc: "DBを利用する全てのテストを実行します。"
+    cmds:
+      - go test -race $(go list ./... | grep infra)
+  test:non-db:
+    desc: "DBを利用しない全てのテストを実行します。"
+    cmds:
+      - go test -race $(go list ./... | grep -v infra)
