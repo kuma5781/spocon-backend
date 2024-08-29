@@ -1,6 +1,8 @@
 package app
 
 import (
+	"fmt"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -16,6 +18,7 @@ func InitMiddleware(e *echo.Echo) {
 }
 
 func CustomHttpErrorHandler(err error, c echo.Context) {
+	fmt.Printf("STACK TRACE:\n %+v\n", err)
 	if c.Response().Committed {
 		return
 	}
