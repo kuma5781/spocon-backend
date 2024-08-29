@@ -3,6 +3,8 @@ package usecase
 import (
 	g "spocon-backend/internal/domain/model/grade"
 	r "spocon-backend/internal/domain/repository"
+
+	"github.com/pkg/errors"
 )
 
 type GradeUsecase struct {
@@ -18,7 +20,7 @@ func NewGradeUsecase(r r.GradeRepository) GradeUsecase {
 func (u *GradeUsecase) GetGrades() ([]g.Grade, error) {
 	grades, err := u.GradeRepository.FetchAll()
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "gradeのFetchAll()に失敗しました。")
 	}
 
 	return grades, nil
