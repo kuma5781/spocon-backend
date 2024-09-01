@@ -28,7 +28,7 @@ func (ri *GradeRepositoryImpl) FetchAll() ([]g.Grade, error) {
 	for rows.Next() {
 		var grade g.Grade
 		if err := rows.Scan(&id, &grade.Name); err != nil {
-			return nil, errors.Wrap(err, "gradesレコードの変換処理に失敗しました。")
+			return nil, errors.Wrap(err, "gradeの型変換に失敗しました。")
 		}
 		grade.Id = g.NewGradeId(id)
 		grades = append(grades, grade)
