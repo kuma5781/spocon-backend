@@ -24,11 +24,11 @@ func (u *TeamUsecase) CreateTeam(input *dto.TeamCreateInput) error {
 		input.AddressCity,
 	)
 	if err != nil {
-		return errors.Wrap(err, "チームの作成に失敗しました。")
+		return errors.Wrap(err, "チームの生成に失敗しました。")
 	}
 
 	if err := u.TeamRepository.Create(team); err != nil {
-		return errors.Wrap(err, "チームの作成に失敗しました。")
+		return errors.Wrap(err, "チームの登録に失敗しました。")
 	}
 
 	return nil
