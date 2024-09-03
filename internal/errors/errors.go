@@ -7,11 +7,11 @@ import (
 )
 
 var (
-	InvalidParamsError  = errors.New("リクエストに不正な値が含まれています。")
-	NotFoundEntityError = errors.New("指定されたリソースが見つかりません。")
+	InvalidRequestParamsError = errors.New("リクエストに不正な値が含まれています。")
+	NotFoundEntityError       = errors.New("指定されたリソースが見つかりません。")
 
 	BadRequestErrors = errors.Join(
-		InvalidParamsError,
+		InvalidRequestParamsError,
 	)
 
 	NotFoundErrors = errors.Join(
@@ -19,7 +19,7 @@ var (
 	)
 )
 
-func getStatusCode(err error) int {
+func GetStatusCode(err error) int {
 	code := 500
 	cause := e.Cause(err)
 

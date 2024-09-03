@@ -1,12 +1,13 @@
 package handler
 
 import (
-	"net/http"
+	e "spocon-backend/internal/errors"
 	a "spocon-backend/internal/handler/adapter"
 	"spocon-backend/internal/openapi"
 	"spocon-backend/internal/usecase"
 
 	"github.com/labstack/echo/v4"
+	"github.com/pkg/errors"
 )
 
 type TeamHandler struct {
@@ -22,11 +23,11 @@ func NewTeamHandler(u usecase.TeamUsecase) TeamHandler {
 func (h *Handlers) CreateTeam(c echo.Context) error {
 	var body openapi.CreateTeamRequest
 	if err := c.Bind(&body); err != nil {
-		return c.JSON(http.StatusBadRequest, err) // TODO: wrapして返す
+		return errors.Wrap(e.InvalidRequestParamsError, err.Error())
 	}
 	input := a.ToCreateTeamInput(&body)
 	if err := h.TeamHandler.TeamUsecase.CreateTeam(input); err != nil {
-		return c.JSON(http.StatusInternalServerError, err) // TODO: wrapして返す
+		return errors.Wrap(err, "チーム登録に失敗しました。")
 	}
 
 	return nil
