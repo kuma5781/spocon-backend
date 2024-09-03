@@ -13,6 +13,12 @@ type TeamService struct {
 	UUIDv7Generator util.UUIDv7Generator
 }
 
+func NewTeamService(u util.UUIDv7Generator) TeamService {
+	return TeamService{
+		UUIDv7Generator: u,
+	}
+}
+
 func (s *TeamService) Create(
 	name string,
 	sportId s.SportId,

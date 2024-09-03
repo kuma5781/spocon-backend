@@ -7,8 +7,7 @@ type UUIDv7Generator interface {
 	Generate() (string, error)
 }
 
-type UUIDv7GeneratorImpl struct {
-}
+type UUIDv7GeneratorImpl struct{}
 
 func (*UUIDv7GeneratorImpl) Generate() (string, error) {
 	uuid, err := uuid.NewV7()
@@ -16,4 +15,8 @@ func (*UUIDv7GeneratorImpl) Generate() (string, error) {
 		return "", err
 	}
 	return uuid.String(), nil
+}
+
+func NewUUIDv7Generator() UUIDv7Generator {
+	return &UUIDv7GeneratorImpl{}
 }

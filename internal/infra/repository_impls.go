@@ -11,5 +11,6 @@ type RepositoryImpls struct {
 func NewRepositories(db *sql.DB) *r.Repositories {
 	return &r.Repositories{
 		GradeRepository: NewGradeRepositoryImpl(db),
+		TeamRepository:  NewTeamRepositoryImpl(db),
 	}
 }

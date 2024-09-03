@@ -13,6 +13,13 @@ type TeamUsecase struct {
 	TeamRepository r.TeamRepository
 }
 
+func NewTeamUsecase(ts s.TeamService, tr r.TeamRepository) TeamUsecase {
+	return TeamUsecase{
+		TeamService:    ts,
+		TeamRepository: tr,
+	}
+}
+
 func (u *TeamUsecase) CreateTeam(input *dto.TeamCreateInput) error {
 	team, err := u.TeamService.Create(
 		input.TeamName,
