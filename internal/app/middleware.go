@@ -24,5 +24,8 @@ func CustomHttpErrorHandler(err error, c echo.Context) {
 	if c.Response().Committed {
 		return
 	}
-	c.JSON(e.GetStatusCode(err), map[string]string{"error": err.Error()})
+	err = c.JSON(e.GetStatusCode(err), map[string]string{"error": err.Error()})
+	if err != nil {
+		c.Logger().Error(err) // TODO: ログ出力はログ出力基盤作成時に再考する
+	}
 }
