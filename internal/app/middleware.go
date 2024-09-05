@@ -3,6 +3,8 @@ package app
 import (
 	"fmt"
 
+	e "spocon-backend/internal/errors"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -22,5 +24,5 @@ func CustomHttpErrorHandler(err error, c echo.Context) {
 	if c.Response().Committed {
 		return
 	}
-	c.JSON(getStatusCode(err), map[string]string{"error": err.Error()})
+	c.JSON(e.GetStatusCode(err), map[string]string{"error": err.Error()})
 }

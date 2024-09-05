@@ -14,6 +14,19 @@ type CreateTeamRequest struct {
 	SportId      string `json:"sport_id"`
 }
 
+// CreateTeamResponse defines model for CreateTeamResponse.
+type CreateTeamResponse struct {
+	AddressCity  string `json:"address_city"`
+	AddressState string `json:"address_state"`
+	Description  string `json:"description"`
+	GradeId      string `json:"grade_id"`
+	IconPath     string `json:"icon_path"`
+	Id           string `json:"id"`
+	Name         string `json:"name"`
+	SportId      string `json:"sport_id"`
+	Uuid         string `json:"uuid"`
+}
+
 // GetGradesResponse defines model for GetGradesResponse.
 type GetGradesResponse struct {
 	Grades []Grade `json:"grades"`

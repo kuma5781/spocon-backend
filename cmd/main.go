@@ -2,10 +2,12 @@ package main
 
 import (
 	"spocon-backend/internal/app"
+	"spocon-backend/internal/domain/service"
 	"spocon-backend/internal/handler"
 	"spocon-backend/internal/infra"
 	"spocon-backend/internal/openapi"
 	"spocon-backend/internal/usecase"
+	"spocon-backend/internal/util"
 
 	"github.com/labstack/echo/v4"
 )
@@ -21,7 +23,8 @@ func main() {
 	}
 
 	r := infra.NewRepositories(db)
-	u := usecase.NewUsecases(r)
+	s := service.NewServices(util.NewUUIDv7Generator())
+	u := usecase.NewUsecases(r, s)
 	h := handler.NewHandlers(u)
 	openapi.RegisterHandlers(e, h)
 
