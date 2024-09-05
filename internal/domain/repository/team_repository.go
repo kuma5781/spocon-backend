@@ -6,5 +6,5 @@ import (
 )
 
 type TeamRepository interface {
-	Create(*t.Team) error
+	Create(*t.Team) (*t.Team, error)
 }

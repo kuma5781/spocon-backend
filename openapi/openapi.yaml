@@ -68,7 +68,10 @@ paths:
       responses:
         '201':
           description: チームの登録が成功した場合
-          content: {}
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTeamResponse'
         '400':
           description: リクエスト形式が正しくない場合
           content: {}
@@ -104,6 +107,37 @@ components:
         - address_state
         - address_city
       properties:
+        name:
+          type: string
+        sport_id:
+          type: string
+        grade_id:
+          type: string
+        icon_path:
+          type: string
+        description:
+          type: string
+        address_state:
+          type: string
+        address_city:
+          type: string
+    CreateTeamResponse:
+      type: object
+      required:
+        - id
+        - uuid
+        - name
+        - sport_id
+        - grade_id
+        - icon_path
+        - description
+        - address_state
+        - address_city
+      properties:
+        id:
+          type: string
+        uuid:
+          type: string
         name:
           type: string
         sport_id:

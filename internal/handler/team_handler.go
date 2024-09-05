@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"net/http"
 	e "spocon-backend/internal/errors"
 	a "spocon-backend/internal/handler/adapter"
 	"spocon-backend/internal/openapi"
@@ -26,9 +27,10 @@ func (h *Handlers) CreateTeam(c echo.Context) error {
 		return errors.Wrap(e.InvalidRequestParamsError, err.Error())
 	}
 	input := a.ToCreateTeamInput(&body)
-	if err := h.TeamHandler.TeamUsecase.CreateTeam(input); err != nil {
+	result, err := h.TeamHandler.TeamUsecase.CreateTeam(input)
+	if err != nil {
 		return errors.Wrap(err, "チーム登録に失敗しました。")
 	}
+	return c.JSON(http.StatusCreated, a.ToCreateTeamOutput(result))
 
-	return nil
 }
