@@ -5,6 +5,7 @@ vars:
   JOIN_COMMAND: join .Imports " "
   APP_CONTAINER_NAME: spocon-backend-ex
   GOLANGCI_LINT_VERSION: v1.59.1
+  GOLINES_OPTIONS: -m 120 --base-formatter=gofmt
 
 tasks:
   setup:
@@ -23,10 +24,12 @@ tasks:
   lint:
     desc: "Goの静的解析ツールを実行します。静的解析でルールに準拠していない場合はエラーになります。"
     cmds:
+      - task: golines:check
       - docker run --rm -v $(pwd):/app -v ~/.cache/golangci-lint/{{.GOLANGCI_LINT_VERSION}}:/root/.cache -w /app golangci/golangci-lint:{{.GOLANGCI_LINT_VERSION}} golangci-lint run -v --timeout 5m
   lintfix:
     desc: "Goの静的解析ツールを実行します。静的解析でルールに準拠していない場合は修正します。"
     cmds:
+      - task: golines
       - docker run --rm -v $(pwd):/app -v ~/.cache/golangci-lint/{{.GOLANGCI_LINT_VERSION}}:/root/.cache -w /app golangci/golangci-lint:{{.GOLANGCI_LINT_VERSION}} golangci-lint run --fix -v --timeout 5m
   migration:up:
     desc: "全てのマイグレーションを実行します。"
@@ -69,3 +72,12 @@ tasks:
     desc: "DBを利用しない全てのテストを実行します。"
     cmds:
       - go test -race $(go list ./... | grep -v infra)
+  golines:
+    desc: "golinesを実行して、コードの行数を調整します。"
+    cmds:
+      - "{{.ADD_PATH}} golines {{.GOLINES_OPTIONS}} -w ."
+  golines:check:
+    desc: "golinesを実行して、差分があるかどうかを確認します。"
+    cmds: 
+      - |
+        [ $({{.ADD_PATH}} golines --dry-run {{.GOLINES_OPTIONS}} . | wc -l) -eq 0 ] && exit 0 || (echo "Please Run 'task golines'" && exit 1)

@@ -25,7 +25,6 @@ type TestDB struct {
 func SetupDB(ctx context.Context, m *testing.M) *TestDB {
 	const mysqlImage = "mysql:8.0"
 	const databaseName = "spocon"
-	const createDatabaseFileName = "000-database.sql"
 	const port = "3306"
 
 	req := testcontainers.ContainerRequest{

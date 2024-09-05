@@ -49,7 +49,10 @@ func TestCreate(t *testing.T) {
 				t.Fatal(err) // TODO: 異常系のテストをできる作りにしてテストする
 			}
 			tt.assertions(t, actual, tt.input)
-			tx.Rollback()
+			err = tx.Rollback()
+			if err != nil {
+				t.Fatal(err)
+			}
 		})
 	}
 }
