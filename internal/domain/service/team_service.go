@@ -38,7 +38,7 @@ func (s *TeamService) Create(
 	}
 	return &t.Team{
 		Id:           t.NewTeamId(teamUuid),
-		Uuid:         uuid, // このUUIDは何に使うのか確認
+		Uuid:         uuid, // TODO: このUUIDは何に使うのか確認
 		Name:         name,
 		SportId:      sportId,
 		GradeId:      gradeId,
