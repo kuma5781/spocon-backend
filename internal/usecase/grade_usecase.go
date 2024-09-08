@@ -7,17 +7,21 @@ import (
 	"github.com/pkg/errors"
 )
 
-type GradeUsecase struct {
-	GradeRepository r.GradeRepository
+type GradeUsecase interface {
+	GetGrades() ([]g.Grade, error)
 }
 
 func NewGradeUsecase(r r.GradeRepository) GradeUsecase {
-	return GradeUsecase{
+	return &GradeUsecaseImpl{
 		GradeRepository: r,
 	}
 }
 
-func (u *GradeUsecase) GetGrades() ([]g.Grade, error) {
+type GradeUsecaseImpl struct {
+	GradeRepository r.GradeRepository
+}
+
+func (u *GradeUsecaseImpl) GetGrades() ([]g.Grade, error) {
 	grades, err := u.GradeRepository.FetchAll()
 	if err != nil {
 		return nil, errors.Wrap(err, "gradeのFetchAll()に失敗しました。")

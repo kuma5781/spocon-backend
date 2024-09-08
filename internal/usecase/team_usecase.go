@@ -9,19 +9,23 @@ import (
 	"github.com/pkg/errors"
 )
 
-type TeamUsecase struct {
-	TeamService    s.TeamService
-	TeamRepository r.TeamRepository
+type TeamUsecase interface {
+	CreateTeam(input *dto.TeamCreateInput) (*t.Team, error)
 }
 
 func NewTeamUsecase(ts s.TeamService, tr r.TeamRepository) TeamUsecase {
-	return TeamUsecase{
+	return &TeamUsecaseImpl{
 		TeamService:    ts,
 		TeamRepository: tr,
 	}
 }
 
-func (u *TeamUsecase) CreateTeam(input *dto.TeamCreateInput) (*t.Team, error) {
+type TeamUsecaseImpl struct {
+	TeamService    s.TeamService
+	TeamRepository r.TeamRepository
+}
+
+func (u *TeamUsecaseImpl) CreateTeam(input *dto.TeamCreateInput) (*t.Team, error) {
 	team, err := u.TeamService.Create(
 		input.TeamName,
 		input.SportId,
