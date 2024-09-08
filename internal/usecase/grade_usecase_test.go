@@ -21,7 +21,7 @@ func TestGetGrades(t *testing.T) {
 	tests := []struct {
 		name         string
 		expectedCall func()
-		assertions   func(t *testing.T, actual []g.Grade)
+		assertions   func(t *testing.T, actual []g.Grade, err error)
 	}{
 		{
 			name: "グレードの一覧を正常に取得することができること",
@@ -31,12 +31,23 @@ func TestGetGrades(t *testing.T) {
 					{Id: model.NewGradeId("2"), Name: "grade2"},
 				}, nil)
 			},
-			assertions: func(t *testing.T, actual []g.Grade) {
+			assertions: func(t *testing.T, actual []g.Grade, err error) {
 				expected := []g.Grade{
 					{Id: model.NewGradeId("1"), Name: "grade1"},
 					{Id: model.NewGradeId("2"), Name: "grade2"},
 				}
+				assert.Nil(t, err)
 				assert.Equal(t, expected, actual)
+			},
+		},
+		{
+			name: "グレードの一覧を取得できなかった場合、エラーが返却されること",
+			expectedCall: func() {
+				mockGradeRepository.EXPECT().FetchAll().Return(nil, assert.AnError)
+			},
+			assertions: func(t *testing.T, actual []g.Grade, err error) {
+				assert.Nil(t, actual)
+				assert.Equal(t, "gradeのFetchAll()に失敗しました。: "+assert.AnError.Error(), err.Error())
 			},
 		},
 	}
@@ -44,10 +55,7 @@ func TestGetGrades(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.expectedCall()
 			actual, err := sut.GetGrades()
-			if err != nil {
-				t.Fatal(err)
-			}
-			tt.assertions(t, actual)
+			tt.assertions(t, actual, err)
 		})
 	}
 }
