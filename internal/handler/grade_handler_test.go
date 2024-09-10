@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	g "spocon-backend/internal/domain/model/grade"
-	model "spocon-backend/internal/domain/model/grade"
 	"spocon-backend/internal/handler"
 	"spocon-backend/internal/openapi"
 	"spocon-backend/internal/usecase/mocks"
@@ -39,8 +38,8 @@ func TestGetGrade(t *testing.T) {
 			name: "グレードの一覧を正常に取得することができること",
 			expectedCall: func() {
 				mockGradeUsecase.EXPECT().GetGrades().Return([]g.Grade{
-					{Id: model.NewGradeId("1"), Name: "grade1"},
-					{Id: model.NewGradeId("2"), Name: "grade2"},
+					{Id: g.NewGradeId("1"), Name: "grade1"},
+					{Id: g.NewGradeId("2"), Name: "grade2"},
 				}, nil)
 			},
 			assertions: func(t *testing.T, result *http.Response) {
