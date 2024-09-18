@@ -15,7 +15,7 @@ jobs:
         run: go install github.com/segmentio/golines # バージョンを指定しなければgo.modに記載されたバージョンがインストールされる
       - name: Check by golines
         run: |
-        [ golines --dry-run -m 120 --base-formatter=gofmt . | wc -l) -eq 0 ] && exit "Pass" || (echo "Please Run 'task golines'" && exit 1)
+          [ golines --dry-run -m 120 --base-formatter=gofmt . | wc -l) -eq 0 ] && exit "Pass" || (echo "Please Run 'task golines'" && exit 1)
       - name: Lint
         uses: golangci/golangci-lint-action@v6
         with:
