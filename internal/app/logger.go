@@ -1,8 +1,10 @@
 package app
 
 import (
+	"fmt"
 	"io"
 	"log/slog"
+	"runtime/debug"
 )
 
 type LogConfig struct {
@@ -44,7 +46,8 @@ func (s *SLogLogger) Warn(msg string) {
 }
 
 func (s *SLogLogger) Error(err error, msg string) {
-	s.outLogger.Error(msg)
+	combinedMsg := fmt.Sprintf("%s: %v", msg, err)
+	s.outLogger.Error(combinedMsg, "stacktrace", debug.Stack())
 }
 
 func newSlogger(conf *LogConfig) *SLogLogger {
