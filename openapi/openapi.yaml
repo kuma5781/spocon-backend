@@ -4,7 +4,8 @@ info:
   title: spocon-backend
   discription: spocon-backend Open API 
 servers:
-  - url: /
+  - url: http://localhost:1323
+    description: ローカル環境
 paths:
   /health:
     get:
