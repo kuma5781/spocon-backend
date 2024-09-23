@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"spocon-backend/internal/app"
 	"spocon-backend/internal/domain/service"
 	"spocon-backend/internal/handler"
@@ -13,6 +14,9 @@ import (
 )
 
 func main() {
+	logger := app.InitLogger(os.Stdout, os.Stderr)
+	util.InitAppLogger(logger)
+
 	e := echo.New()
 	app.InitMiddleware(e)
 

@@ -1,6 +1,6 @@
-FROM golang:1.22
+FROM golang:1.23
 
-RUN go install github.com/cosmtrek/air@v1.49.0
+RUN go install github.com/air-verse/air@latest
 
 WORKDIR /app
 
